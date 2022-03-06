@@ -64,7 +64,7 @@ const TribesPage = () => {
 						</div>
 					</div>
 					<button className={styles.join} onClick={() => mutate()}>
-						Leave Tribe
+						Leave Team
 					</button>
 				</div>
 			) : (
@@ -72,7 +72,7 @@ const TribesPage = () => {
 				!tribeErr && (
 					<div className={styles.container2}>
 						<button className={styles.join} onClick={() => router.push('/all-tribes')}>
-							Join a Tribe
+							Join a Team
 						</button>
 					</div>
 				)
@@ -80,7 +80,7 @@ const TribesPage = () => {
 
 			{!account && (
 				<div className={styles.container2}>
-					<p className={styles.error}>Connect Wallet to view your tribe</p>
+					<p className={styles.error}>Connect Wallet to view your team</p>
 				</div>
 			)}
 		</main>
