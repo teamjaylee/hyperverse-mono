@@ -1,59 +1,78 @@
-import Link from 'next/link';
-import { useEffect } from 'react';
+import { useRouter } from 'next/router';
 import styles from '../styles/Home.module.css';
+import Nav from '../components/Nav';
+import Loader from '../components/Loader';
+import { useTribes } from '@decentology/hyperverse-ethereum-tribes';
 import { useEthereum } from '@decentology/hyperverse-ethereum';
+import Image from 'next/image';
 import { toast } from 'react-toastify';
+import { useEffect } from 'react';
 
-const shortenHash = (hash: string = '', charLength: number = 6, postCharLength?: number) => {
-	let shortendHash;
-	if (postCharLength) {
-		shortendHash =
-			hash.slice(0, charLength) +
-			'...' +
-			hash.slice(hash.length - postCharLength, hash.length);
-	} else {
-		shortendHash = hash.slice(0, charLength);
-	}
-	return shortendHash;
-};
+const AllTribes = () => {
+	const { address } = useEthereum();
+	const { Tribes, Join } = useTribes();
+	const router = useRouter();
+	const { data, isLoading: allTribesLoading } = Tribes();
 
-const Nav = () => {
-	const { address, disconnect, connect, error } = useEthereum();
+	const {
+		mutate,
+		isLoading: joinTribeLoading,
+		error,
+	} = Join({
+		onSuccess: () => router.push('/my-tribe'),
+	});
+
+	const isLoading = allTribesLoading || joinTribeLoading;
 
 	useEffect(() => {
 		if (error) {
-			toast.warn(error.message, {
-				position: toast.POSITION.BOTTOM_CENTER,
-			});
+			if (error instanceof Error) {
+				toast.error(error.message, {
+					position: toast.POSITION.BOTTOM_CENTER,
+				});
+			}
 		}
 	}, [error]);
-	return (
-		<nav>
-			<Link href="/" passHref>
-				<a className={styles.logo}>T</a>
-			</Link>
-			<div className={styles.rightNav}>
-				<Link href="/battle">
-                    Battle
-				</Link>
-				<Link href="https://docs.hyperverse.dev/" passHref>
-					<a target="_blank" rel="noreferrer">
-						About
-					</a>
-				</Link>
 
-				{!address ? (
-					<button className={styles.connect} onClick={connect}>
-						Connect Wallet
-					</button>
-				) : (
-					<button className={styles.logout} onClick={disconnect}>
-						<span>{shortenHash(address, 5, 5)}</span>
-					</button>
-				)}
-			</div>
-		</nav>
+	return (
+		<main>
+			<Nav />
+			{isLoading ? (
+				<Loader loaderMessage="processing..." />
+			) : (
+				<div className={styles.container}>
+					<h1>Teams</h1>
+					{address ? (
+						!data ? (
+							<>
+								<h5>There are currently no existing Team.</h5>
+								<a href="/">Go back home</a>
+							</>
+						) : (
+							<>
+								<h5>Select Your Team</h5>
+								<div className={styles.allTribes}>
+									{data.map((item) => (
+										<div key={item.id} onClick={() => mutate(item.id)}>
+											<Image
+												width={400}
+												height={650}
+												className={styles.cards}
+												src={item.imageUrl}
+												alt={item.name}
+											/>
+										</div>
+									))}
+								</div>
+							</>
+						)
+					) : (
+						<p className={styles.error}>Please connect your wallet to join a Team.</p>
+					)}
+				</div>
+			)}
+		</main>
 	);
 };
 
-export default Nav;
+export default AllTribes;
