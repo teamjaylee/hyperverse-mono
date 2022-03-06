@@ -56,7 +56,7 @@ const Battle = () => {
 			{winner && <Confetti width={width} height={height} />}
 			<Nav />
 			<div className={styles.battleRoyal}>
-				<h1 className={styles.header}>Tribes Battle Royale</h1>
+				<h1 className={styles.header}>Team Battle Royale</h1>
 				{!isLoading ? (
 					<button className={styles.battleBtn} onClick={() => startBattle()}>
 						Start Battle
@@ -77,7 +77,7 @@ const Battle = () => {
 								src={contestants[0].imageUrl}
 								width={270}
 								height={350}
-								alt="Tribe 1"
+								alt="Team 1"
 							/>
 						</div>
 						<div className={styles.container4}>
@@ -106,7 +106,7 @@ const Battle = () => {
 								src={contestants[1].imageUrl}
 								width={270}
 								height={350}
-								alt="Tribe 2"
+								alt="Team 2"
 							/>
 						</div>
 					</div>
