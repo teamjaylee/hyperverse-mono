@@ -28,7 +28,7 @@ const Home: NextPage = () => {
 	return (
 		<>
 			<Head>
-				<title>Tribes Sample Project</title>
+				<title>JayLee</title>
 				<meta
 					name="description"
 					content="Sample project utilizing tribes module from hyperverse"
@@ -39,11 +39,10 @@ const Home: NextPage = () => {
 				<Nav />
 				<div className={styles.hero}>
 					<div className={styles.header}>
-						<h1> Tribes</h1>
+						<h1> JayLEE</h1>
+						<h5>Titans Battle</h5>
 						<p className={styles.about}>
-							An example dapp utilizing the tribes module built on the hyperverse.
-							Tribes allows you to build communities that people can join, leave, or
-							create.
+							Get started with the JayLee Titans batlle.
 						</p>
 						{address ? (
 							!data ? (
@@ -53,14 +52,14 @@ const Home: NextPage = () => {
 										router.push('/all-tribes');
 									}}
 								>
-									Join A Tribe
+									Pick a Team
 								</button>
 							) : (
 								<button
 									className={styles.join}
 									onClick={() => router.push('/my-tribe')}
 								>
-									View Your Tribe
+									View Your Team
 								</button>
 							)
 						) : null}
