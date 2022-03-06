@@ -41,22 +41,22 @@ const AllTribes = () => {
 				<Loader loaderMessage="processing..." />
 			) : (
 				<div className={styles.container}>
-					<h1>Tribes</h1>
+					<h1>Teams</h1>
 					{address ? (
 						!data ? (
 							<>
-								<h5>There are currently no existing tribes.</h5>
+								<h5>There are currently no existing Team.</h5>
 								<a href="/">Go back home</a>
 							</>
 						) : (
 							<>
-								<h5>Select Your Tribe</h5>
+								<h5>Select Your Team</h5>
 								<div className={styles.allTribes}>
 									{data.map((item) => (
 										<div key={item.id} onClick={() => mutate(item.id)}>
 											<Image
-												width={200}
-												height={250}
+												width={400}
+												height={650}
 												className={styles.cards}
 												src={item.imageUrl}
 												alt={item.name}
@@ -67,7 +67,7 @@ const AllTribes = () => {
 							</>
 						)
 					) : (
-						<p className={styles.error}>Please connect your wallet to join a tribe.</p>
+						<p className={styles.error}>Please connect your wallet to join a Team.</p>
 					)}
 				</div>
 			)}
